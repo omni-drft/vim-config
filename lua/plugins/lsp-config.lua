@@ -13,7 +13,7 @@ return {
           "lua_ls",
           "clangd",
           "asm_lsp",
-          "cmakelsp",
+          "cmake",
           "jsonls",
         },
         handlers = {
