@@ -5,22 +5,31 @@ keymap.set("n", "<leader>h", "<cmd>noh<CR>", { desc = "Wyczyść podświetlenie 
 keymap.set("n", "[b", ":bprevious<CR>", { desc = "Poprzedni bufor" })
 keymap.set("n", "]b", ":bnext<CR>", { desc = "Następny bufor" })
 
+
 keymap.set("n", "<leader>c", function()
-  local bufferline = pcall(require, "bufferline")
-  if bufferline then
-    require("bufferline").delete_buffer()
-  else
-    vim.cmd("bdelete")
+  vim.cmd("bdelete")
+
+  local current_buf = vim.api.nvim_get_current_buf()
+  local current_ft = vim.api.nvim_get_option_value('filetype', { buf = current_buf })
+
+  if current_ft == 'NvimTree' then
+    vim.cmd("bnext")
+
+    local after_bnext_buf = vim.api.nvim_get_current_buf()
+    local after_bnext_ft = vim.api.nvim_get_option_value('filetype', { buf = after_bnext_buf })
+
+    if after_bnext_ft == 'NvimTree' then
+      vim.cmd("enew") 
+    end
   end
 end, { desc = "Zamknij bufor" })
-
 
 -- Nvim-Tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Pokaż/Ukryj eksplorator plików" })
 keymap.set("n", "<C-h>", function() vim.cmd.wincmd("h") end, { desc = "Idź do okna po lewej" })
 keymap.set("n", "<C-l>", function() vim.cmd.wincmd("l") end, { desc = "Idź do okna po prawej" })
 
--- Telescope (Problem 3)
+-- Telescope 
 keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Szukaj plików' })
 keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Szukaj tekstu w projekcie' })
 keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Szukaj w otwartych buforach' })
