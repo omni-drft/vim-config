@@ -7,17 +7,13 @@ return {
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      local on_attach = function(client, bufnr)
-        vim.keymap.set('n', '<S-gd>', vim.lsp.buf.definition, { buffer = bufnr, desc = 'LSP: Go to definition' })
-
-      end
 
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",
           "clangd",
           "asm_lsp",
-          "cmake",
+          "cmakelsp",
           "jsonls",
         },
         handlers = {

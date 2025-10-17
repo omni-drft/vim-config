@@ -17,10 +17,5 @@ return {
       }
     })
 
-    local keymap = vim.keymap
-
-    keymap.set("n", "[b", ":bprevious<CR>", { desc = "Next buffer" })
-    keymap.set("n", "]b", ":bnext<CR>", { desc = "Previous buffer" })
-    keymap.set("n", "<leader>c", ":bdelete<CR>", { desc = "Close buffer" })
   end,
 }
